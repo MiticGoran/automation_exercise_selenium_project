@@ -6,8 +6,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class SignupLoginPage extends BasePage {
-    public SignupLoginPage(WebDriver driver, WebDriverWait wait) {
+public class LoginPage extends BasePage {
+    public LoginPage(WebDriver driver, WebDriverWait wait) {
         super(driver, wait);
     }
     public WebElement getSignupNameInput() {
@@ -35,5 +35,6 @@ public class SignupLoginPage extends BasePage {
     public String signupText() {
         return driver.findElement(By.xpath("//div[@class='signup-form']/h2")).getText();
     }
+
 
 }

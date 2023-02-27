@@ -11,7 +11,8 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import pages.NavPage;
-import pages.SignupLoginPage;
+import pages.LoginPage;
+import pages.SignupPage;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,7 +28,9 @@ public abstract class BasicTest {
     protected WebDriverWait wait;
     protected String baseUrl = "http://automationexercise.com";
     protected NavPage navPage;
-    protected SignupLoginPage signupLoginPage;
+    protected LoginPage loginPage;
+    protected SignupPage signupPage;
+
 
     @BeforeClass
     public void setup() {
@@ -38,7 +41,8 @@ public abstract class BasicTest {
         wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         driver.manage().window().maximize();
         navPage = new NavPage(driver, wait);
-        signupLoginPage = new SignupLoginPage(driver, wait);
+        loginPage = new LoginPage(driver, wait);
+        signupPage = new SignupPage(driver, wait);
     }
 
     @BeforeMethod
@@ -59,7 +63,7 @@ public abstract class BasicTest {
 
     @AfterClass
     public void afterClass() throws InterruptedException, IOException {
-        Thread.sleep(2000);
+        Thread.sleep(5000);
         driver.quit();
     }
 }

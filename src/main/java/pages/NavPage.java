@@ -21,4 +21,13 @@ public class NavPage extends BasePage {
     public WebElement getLoginSignupLink() {
         return driver.findElement(By.xpath("//a[contains(text(), 'Login')]"));
     }
+    public WebElement getLogoutLink() {
+        return driver.findElement(By.xpath("//a[contains(text(), 'Logout')]"));
+    }
+    public WebElement getDeleteLink() {
+        return driver.findElement(By.xpath("//a[contains(text(), 'Delete Account')]"));
+    }
+    public String getLoggedInText() {
+        return driver.findElement(By.xpath("//a[contains(text(), ' Logged in as ')]")).getText();
+    }
 }
