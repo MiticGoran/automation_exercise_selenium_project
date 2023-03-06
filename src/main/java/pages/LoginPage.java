@@ -38,4 +38,7 @@ public class LoginPage extends BasePage {
     public String getLoginText() {
         return driver.findElement(By.xpath("//div[@class='login-form']/h2")).getText();
     }
+    public String getIncorrectDataText() {
+        return driver.findElement(By.xpath("//div[@class='login-form']//p")).getText();
+    }
 }

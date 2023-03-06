@@ -80,4 +80,19 @@ public class AutomationExerciseTests extends BasicTest {
         Assert.assertTrue(signupPage.getAccountDeletedText().contains("ACCOUNT DELETED!"),
                 "'ACCOUNT DELETED!' is not visible!");
     }
+    @Test(priority = 30)
+    @Description("Test Case 3: Login User with incorrect email and password")
+    public void loginWithIncorrectData() {
+        Assert.assertEquals(driver.getCurrentUrl(), "https://automationexercise.com/",
+                "Wrong URL!");
+        navPage.getLoginSignupLink().click();
+        loginPage.waitForSignupLoginPage();
+        Assert.assertTrue(loginPage.getLoginText().contains("Login to your account"),
+                "'Login to your account' is not visible!");
+        loginPage.getLoginEmailInput().sendKeys("incorrect@mita.com");
+        loginPage.getLoginPasswordInput().sendKeys("incorrect123");
+        loginPage.getLoginButton().click();
+        Assert.assertTrue(loginPage.getIncorrectDataText().contains("Your email or password is incorrect!"),
+                "'Your email or password is incorrect!' is not visible!");
+    }
 }
