@@ -9,14 +9,15 @@ public class AutomationExerciseTests extends BasicTest {
     @Test(priority = 10)
     @Description("Test Case 1: Register User")
     public void registerUser() throws InterruptedException {
+        navPage.waitForBasePage(); //waiting because of ad blocker
         Assert.assertEquals(driver.getCurrentUrl(), "https://automationexercise.com/",
                 "Wrong URL!");
         navPage.getLoginSignupLink().click();
         loginPage.waitForSignupLoginPage();
-        Assert.assertTrue(loginPage.signupText().contains("New User Signup!"),
+        Assert.assertTrue(loginPage.getSignupText().contains("New User Signup!"),
                 "'New User Signup!' is not visible!");
         loginPage.getSignupNameInput().sendKeys("Goran");
-        loginPage.getSignupEmailInput().sendKeys("goran01@goran.com");
+        loginPage.getSignupEmailInput().sendKeys("goranitbc@mita.com");
         loginPage.getSignupButton().click();
         signupPage.waitForAccountInformationPage();
         Assert.assertTrue(signupPage.accountInformationText().contains("ENTER ACCOUNT INFORMATION"),
@@ -52,9 +53,31 @@ public class AutomationExerciseTests extends BasicTest {
         signupPage.getContinueButton().click();
         Assert.assertTrue(navPage.getLoggedInText().contains("Logged in as Goran"),
                 "'Logged in as username' is not visible!");
-        navPage.getDeleteLink().click();
+        navPage.getLogoutLink().click();
+        Assert.assertTrue(driver.getCurrentUrl().contains("/login"),
+                "Wrong URL!");
+//        navPage.getDeleteAccountLink().click();
+//        signupPage.waitForAccountDeletedPage();
+//        Assert.assertTrue(signupPage.getAccountDeletedText().contains("ACCOUNT DELETED!"),
+//                "'ACCOUNT DELETED!' is not visible!");
+//        signupPage.getContinueButton().click();
+    }
+    @Test(priority = 20)
+    @Description("Test Case 2: Login User with correct email and password")
+    public void loginWithCorrectData() {
+        Assert.assertEquals(driver.getCurrentUrl(), "https://automationexercise.com/",
+                "Wrong URL!");
+        navPage.getLoginSignupLink().click();
+        loginPage.waitForSignupLoginPage();
+        Assert.assertTrue(loginPage.getLoginText().contains("Login to your account"),
+                "'Login to your account' is not visible!");
+        loginPage.getLoginEmailInput().sendKeys("goranitbc@mita.com");
+        loginPage.getLoginPasswordInput().sendKeys("pass12345");
+        loginPage.getLoginButton().click();
+        Assert.assertTrue(navPage.getLoggedInText().contains("Logged in as Goran"),
+                "'Logged in as username' is not visible!");
+        navPage.getDeleteAccountLink().click();
         Assert.assertTrue(signupPage.getAccountDeletedText().contains("ACCOUNT DELETED!"),
                 "'ACCOUNT DELETED!' is not visible!");
-        signupPage.getContinueButton().click();
     }
 }

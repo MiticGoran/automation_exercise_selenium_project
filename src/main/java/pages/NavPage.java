@@ -25,7 +25,7 @@ public class NavPage extends BasePage {
     public WebElement getLogoutLink() {
         return driver.findElement(By.xpath("//a[contains(text(), 'Logout')]"));
     }
-    public WebElement getDeleteLink() {
+    public WebElement getDeleteAccountLink() {
         return driver.findElement(By.xpath("//a[contains(text(), 'Delete Account')]"));
     }
     public String getLoggedInText() {
@@ -33,6 +33,6 @@ public class NavPage extends BasePage {
     }
     public void waitForBasePage() {
         wait.until(ExpectedConditions
-                .visibilityOfElementLocated(By.className("col-sm-4")));
+                .visibilityOfElementLocated(By.xpath("//img[@alt='Website for automation practice']")));
     }
 }

@@ -21,6 +21,10 @@ public class SignupPage extends BasePage {
         wait.until(ExpectedConditions
                 .visibilityOfElementLocated(By.xpath("//*[@data-qa='account-created']")));
     }
+    public void waitForAccountDeletedPage() {
+        wait.until(ExpectedConditions
+                .visibilityOfElementLocated(By.xpath("//*[@data-qa='account-deleted']")));
+    }
     public String getAccountCreatedText() {
         return driver.findElement(By.xpath("//*[@data-qa='account-created']")).getText();
     }

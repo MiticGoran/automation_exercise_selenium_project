@@ -39,6 +39,7 @@ public abstract class BasicTest {
     public void setup() {
         System.setProperty("webdriver.chrome.driver", "drivers/chromedriver.exe");
         options = new ChromeOptions();
+        // website is full of ads, adding ad blocker
         options.addArguments
                 ("load-extension=C:\\Users\\Mita\\AppData\\Local\\Google\\Chrome" +
                         "\\User Data\\Default\\Extensions\\ggdpplfehdighdpleoegjefnpefgpgfh\\1.0.10_0");
@@ -55,7 +56,6 @@ public abstract class BasicTest {
     @BeforeMethod
     public void beforeMethod() {
         driver.get(baseUrl);
-        navPage.waitForBasePage();
     }
 
     @AfterMethod

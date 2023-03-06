@@ -32,7 +32,10 @@ public class LoginPage extends BasePage {
         wait.until(ExpectedConditions
             .visibilityOfElementLocated(By.className("signup-form")));
     }
-    public String signupText() {
+    public String getSignupText() {
         return driver.findElement(By.xpath("//div[@class='signup-form']/h2")).getText();
+    }
+    public String getLoginText() {
+        return driver.findElement(By.xpath("//div[@class='login-form']/h2")).getText();
     }
 }
