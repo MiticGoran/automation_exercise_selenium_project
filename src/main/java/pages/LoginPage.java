@@ -35,6 +35,4 @@ public class LoginPage extends BasePage {
     public String signupText() {
         return driver.findElement(By.xpath("//div[@class='signup-form']/h2")).getText();
     }
-
-
 }

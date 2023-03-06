@@ -1,9 +1,12 @@
 package tests;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
@@ -30,15 +33,19 @@ public abstract class BasicTest {
     protected NavPage navPage;
     protected LoginPage loginPage;
     protected SignupPage signupPage;
-
+    protected ChromeOptions options;
 
     @BeforeClass
     public void setup() {
         System.setProperty("webdriver.chrome.driver", "drivers/chromedriver.exe");
-        driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
-        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(20));
-        wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        options = new ChromeOptions();
+        options.addArguments
+                ("load-extension=C:\\Users\\Mita\\AppData\\Local\\Google\\Chrome" +
+                        "\\User Data\\Default\\Extensions\\ggdpplfehdighdpleoegjefnpefgpgfh\\1.0.10_0");
+        driver = new ChromeDriver(options);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(30));
         driver.manage().window().maximize();
         navPage = new NavPage(driver, wait);
         loginPage = new LoginPage(driver, wait);
@@ -48,6 +55,7 @@ public abstract class BasicTest {
     @BeforeMethod
     public void beforeMethod() {
         driver.get(baseUrl);
+        navPage.waitForBasePage();
     }
 
     @AfterMethod
@@ -63,7 +71,7 @@ public abstract class BasicTest {
 
     @AfterClass
     public void afterClass() throws InterruptedException, IOException {
-        Thread.sleep(5000);
+        Thread.sleep(3000);
         driver.quit();
     }
 }

@@ -5,10 +5,10 @@ import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class RegisterUserTest extends BasicTest {
+public class AutomationExerciseTests extends BasicTest {
     @Test(priority = 10)
     @Description("Test Case 1: Register User")
-    public void visitTheSignupPage() throws InterruptedException {
+    public void registerUser() throws InterruptedException {
         Assert.assertEquals(driver.getCurrentUrl(), "https://automationexercise.com/",
                 "Wrong URL!");
         navPage.getLoginSignupLink().click();
@@ -50,8 +50,6 @@ public class RegisterUserTest extends BasicTest {
         Assert.assertTrue(signupPage.getAccountCreatedText().contains("ACCOUNT CREATED!"),
                 "'ACCOUNT CREATED!' is not visible!");
         signupPage.getContinueButton().click();
-//        signupPage.waitForDismissAdButton();
-//        signupPage.getDismissAdButton().click();
         Assert.assertTrue(navPage.getLoggedInText().contains("Logged in as Goran"),
                 "'Logged in as username' is not visible!");
         navPage.getDeleteLink().click();

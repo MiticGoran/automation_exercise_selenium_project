@@ -109,12 +109,5 @@ public class SignupPage extends BasePage {
     public WebElement getContinueButton() {
         return driver.findElement(By.xpath("//a[@data-qa='continue-button']"));
     }
-    public void waitForDismissAdButton() {
-        wait.until(ExpectedConditions
-                .visibilityOfElementLocated(By.id("ad_position_box")));
-    }
-    public WebElement getDismissAdButton() {
-        return driver.findElement(By.id("dismiss-button"));
-    }
 
 }

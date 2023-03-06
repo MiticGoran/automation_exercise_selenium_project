@@ -3,6 +3,7 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class NavPage extends BasePage {
@@ -29,5 +30,9 @@ public class NavPage extends BasePage {
     }
     public String getLoggedInText() {
         return driver.findElement(By.xpath("//a[contains(text(), ' Logged in as ')]")).getText();
+    }
+    public void waitForBasePage() {
+        wait.until(ExpectedConditions
+                .visibilityOfElementLocated(By.className("col-sm-4")));
     }
 }
