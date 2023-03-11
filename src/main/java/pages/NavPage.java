@@ -25,6 +25,12 @@ public class NavPage extends BasePage {
     public WebElement getLogoutLink() {
         return driver.findElement(By.xpath("//a[contains(text(), 'Logout')]"));
     }
+    public WebElement getContactUsLink() {
+        return driver.findElement(By.xpath("//a[contains(text(), 'Contact us')]"));
+    }
+    public WebElement getTestCasesLink() {
+        return driver.findElement(By.xpath("//a[contains(text(), 'Test Cases')]"));
+    }
     public WebElement getDeleteAccountLink() {
         return driver.findElement(By.xpath("//a[contains(text(), 'Delete Account')]"));
     }
@@ -35,4 +41,5 @@ public class NavPage extends BasePage {
         wait.until(ExpectedConditions
                 .visibilityOfElementLocated(By.xpath("//img[@alt='Website for automation practice']")));
     }
+
 }

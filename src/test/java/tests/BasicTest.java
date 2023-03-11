@@ -13,6 +13,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import pages.ContactPage;
 import pages.NavPage;
 import pages.LoginPage;
 import pages.SignupPage;
@@ -25,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Random;
 
 public abstract class BasicTest {
     protected WebDriver driver;
@@ -33,16 +35,26 @@ public abstract class BasicTest {
     protected NavPage navPage;
     protected LoginPage loginPage;
     protected SignupPage signupPage;
+    protected ContactPage contactPage;
     protected ChromeOptions options;
+    protected Random random;
+    protected int randomInt;
+    protected String email;
 
     @BeforeClass
     public void setup() {
+        random = new Random();
+        randomInt = random.nextInt(10000);
+        email = "goran" + randomInt + "@mita.com";
         System.setProperty("webdriver.chrome.driver", "drivers/chromedriver.exe");
         options = new ChromeOptions();
+        // to fix: tests don't start with new Chrome update
+        options.addArguments("--remote-allow-origins=*");
         // website is full of ads, adding ad blocker
         options.addArguments
-                ("load-extension=C:\\Users\\Mita\\AppData\\Local\\Google\\Chrome" +
-                        "\\User Data\\Default\\Extensions\\ggdpplfehdighdpleoegjefnpefgpgfh\\1.0.10_0");
+                ("load-extension=C:\\Users\\Mita\\AppData\\Local\\Google\\Chrome\\" +
+                        "User Data\\Default\\Extensions\\" +
+                        "ggdpplfehdighdpleoegjefnpefgpgfh\\1.0.10_0");
         driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
@@ -51,6 +63,7 @@ public abstract class BasicTest {
         navPage = new NavPage(driver, wait);
         loginPage = new LoginPage(driver, wait);
         signupPage = new SignupPage(driver, wait);
+        contactPage = new ContactPage(driver, wait);
     }
 
     @BeforeMethod

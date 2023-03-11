@@ -31,6 +31,9 @@ public class SignupPage extends BasePage {
     public String getAccountDeletedText() {
         return driver.findElement(By.xpath("//*[@data-qa='account-deleted']")).getText();
     }
+    public String getEmailAlreadyExistText() {
+        return driver.findElement(By.xpath("//div[@class='signup-form']//p")).getText();
+    }
     public WebElement getMrTitleRadioInput() {
         return driver.findElement(By.id("id_gender1"));
     }

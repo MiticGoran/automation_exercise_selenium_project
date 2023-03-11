@@ -5,6 +5,8 @@ import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.io.File;
+
 public class AutomationExerciseTests extends BasicTest {
     @Test(priority = 10)
     @Description("Test Case 1: Register User")
@@ -17,7 +19,7 @@ public class AutomationExerciseTests extends BasicTest {
         Assert.assertTrue(loginPage.getSignupText().contains("New User Signup!"),
                 "'New User Signup!' is not visible!");
         loginPage.getSignupNameInput().sendKeys("Goran");
-        loginPage.getSignupEmailInput().sendKeys("goranitbc@mita.com");
+        loginPage.getSignupEmailInput().sendKeys(email);
         loginPage.getSignupButton().click();
         signupPage.waitForAccountInformationPage();
         Assert.assertTrue(signupPage.accountInformationText().contains("ENTER ACCOUNT INFORMATION"),
@@ -71,14 +73,17 @@ public class AutomationExerciseTests extends BasicTest {
         loginPage.waitForSignupLoginPage();
         Assert.assertTrue(loginPage.getLoginText().contains("Login to your account"),
                 "'Login to your account' is not visible!");
-        loginPage.getLoginEmailInput().sendKeys("goranitbc@mita.com");
+        loginPage.getLoginEmailInput().sendKeys(email);
         loginPage.getLoginPasswordInput().sendKeys("pass12345");
         loginPage.getLoginButton().click();
         Assert.assertTrue(navPage.getLoggedInText().contains("Logged in as Goran"),
                 "'Logged in as username' is not visible!");
-        navPage.getDeleteAccountLink().click();
-        Assert.assertTrue(signupPage.getAccountDeletedText().contains("ACCOUNT DELETED!"),
-                "'ACCOUNT DELETED!' is not visible!");
+        navPage.getLogoutLink().click();
+        Assert.assertTrue(driver.getCurrentUrl().contains("/login"),
+                "Wrong URL!");
+//        navPage.getDeleteAccountLink().click();
+//        Assert.assertTrue(signupPage.getAccountDeletedText().contains("ACCOUNT DELETED!"),
+//                "'ACCOUNT DELETED!' is not visible!");
     }
     @Test(priority = 30)
     @Description("Test Case 3: Login User with incorrect email and password")
@@ -94,5 +99,68 @@ public class AutomationExerciseTests extends BasicTest {
         loginPage.getLoginButton().click();
         Assert.assertTrue(loginPage.getIncorrectDataText().contains("Your email or password is incorrect!"),
                 "'Your email or password is incorrect!' is not visible!");
+    }
+    @Test(priority = 40)
+    @Description("Test Case 4: Logout User")
+    public void logoutUser() {
+        Assert.assertEquals(driver.getCurrentUrl(), "https://automationexercise.com/",
+                "Wrong URL!");
+        navPage.getLoginSignupLink().click();
+        loginPage.waitForSignupLoginPage();
+        Assert.assertTrue(loginPage.getLoginText().contains("Login to your account"),
+                "'Login to your account' is not visible!");
+        loginPage.getLoginEmailInput().sendKeys(email);
+        loginPage.getLoginPasswordInput().sendKeys("pass12345");
+        loginPage.getLoginButton().click();
+        Assert.assertTrue(navPage.getLoggedInText().contains("Logged in as Goran"),
+                "'Logged in as username' is not visible!");
+        navPage.getLogoutLink().click();
+        Assert.assertTrue(driver.getCurrentUrl().contains("/login"),
+                "Wrong URL!");
+    }
+    @Test(priority = 50)
+    @Description("Test Case 5: Register User with existing email")
+    public void registerUserWithExistingEmail() {
+        Assert.assertEquals(driver.getCurrentUrl(), "https://automationexercise.com/",
+                "Wrong URL!");
+        navPage.getLoginSignupLink().click();
+        loginPage.waitForSignupLoginPage();
+        Assert.assertTrue(loginPage.getSignupText().contains("New User Signup!"),
+                "'New User Signup!' is not visible!");
+        loginPage.getSignupNameInput().sendKeys("Mita");
+        loginPage.getSignupEmailInput().sendKeys(email);
+        loginPage.getSignupButton().click();
+        Assert.assertTrue(signupPage.getEmailAlreadyExistText().contains("Email Address already exist!"),
+                "'Email Address already exist!' notification is not visible!");
+    }
+
+    @Test(priority = 60)
+    @Description("Test Case 6: Contact Us Form")
+    public void contactUsForm() {
+        Assert.assertEquals(driver.getCurrentUrl(), "https://automationexercise.com/",
+                "Wrong URL!");
+        navPage.getContactUsLink().click();
+        Assert.assertTrue(contactPage.getGetInTouchText().contains("GET IN TOUCH"),
+                "'GET IN TOUCH' is not visible!");
+        contactPage.getNameInput().sendKeys("Goran");
+        contactPage.getEmailInput().sendKeys(email);
+        contactPage.getSubjectInput().sendKeys("Test subject");
+        contactPage.getYourMessageHereTextArea().sendKeys("Test text.");
+        contactPage.getUploadFileInput().sendKeys(new File("data/randomimg2.jpg").getAbsolutePath());
+        contactPage.getSubmitButton().click();
+        contactPage.switchToAlert();
+        Assert.assertTrue(contactPage.getSuccessText().contains("Success! Your details have been submitted successfully."),
+                "'Success! Your details have been submitted successfully.' is not visible!");
+        contactPage.getHomeButton().click();
+    }
+
+    @Test(priority = 70)
+    @Description("Test Case 7: Verify Test Cases Page")
+    public void verifyTestCasesPage() {
+        Assert.assertEquals(driver.getCurrentUrl(), "https://automationexercise.com/",
+                "Wrong URL!");
+        navPage.getTestCasesLink().click();
+        Assert.assertTrue(driver.getCurrentUrl().contains("/test_cases"),
+                "Wrong URL! Not on Test Cases page!");
     }
 }
