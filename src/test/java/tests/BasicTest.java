@@ -13,10 +13,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
-import pages.ContactPage;
-import pages.NavPage;
-import pages.LoginPage;
-import pages.SignupPage;
+import pages.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,6 +33,8 @@ public abstract class BasicTest {
     protected LoginPage loginPage;
     protected SignupPage signupPage;
     protected ContactPage contactPage;
+    protected ProductsPage productsPage;
+    protected HomePage homePage;
     protected ChromeOptions options;
     protected Random random;
     protected int randomInt;
@@ -64,11 +63,14 @@ public abstract class BasicTest {
         loginPage = new LoginPage(driver, wait);
         signupPage = new SignupPage(driver, wait);
         contactPage = new ContactPage(driver, wait);
+        productsPage = new ProductsPage(driver, wait);
+        homePage = new HomePage(driver, wait);
     }
 
     @BeforeMethod
     public void beforeMethod() {
         driver.get(baseUrl);
+        navPage.waitForBasePage(); //waiting because of ad blocker
     }
 
     @AfterMethod

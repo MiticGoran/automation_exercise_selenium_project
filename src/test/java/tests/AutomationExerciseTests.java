@@ -11,7 +11,6 @@ public class AutomationExerciseTests extends BasicTest {
     @Test(priority = 10)
     @Description("Test Case 1: Register User")
     public void registerUser() throws InterruptedException {
-        navPage.waitForBasePage(); //waiting because of ad blocker
         Assert.assertEquals(driver.getCurrentUrl(), "https://automationexercise.com/",
                 "Wrong URL!");
         navPage.getLoginSignupLink().click();
@@ -162,5 +161,54 @@ public class AutomationExerciseTests extends BasicTest {
         navPage.getTestCasesLink().click();
         Assert.assertTrue(driver.getCurrentUrl().contains("/test_cases"),
                 "Wrong URL! Not on Test Cases page!");
+    }
+    @Test(priority = 80)
+    @Description("Test Case 8: Verify All Products and product detail page")
+    public void verifyProductsAndProductDetailPage() {
+        Assert.assertEquals(driver.getCurrentUrl(), "https://automationexercise.com/",
+                "Wrong URL!");
+        navPage.getProductsLink().click();
+        productsPage.waitForProductsPage();
+        Assert.assertTrue(driver.getCurrentUrl().contains("/products"),
+                "Wrong URL! Not on All Products page!");
+        Assert.assertTrue(productsPage.getProductList().isDisplayed(),
+                "Product list is not visible!");
+        productsPage.getViewProductButtonByNumber(1).click();
+        productsPage.waitForProductDetailPage();
+        Assert.assertTrue(driver.getCurrentUrl().contains("/product_details"),
+                "Wrong URL! Not on 'Product Details' page!");
+        Assert.assertTrue(productsPage.getProductDetails().isDisplayed());
+    }
+    @Test(priority = 90)
+    @Description("Test Case 9: Search Product")
+    public void searchProduct() throws InterruptedException {
+        Assert.assertEquals(driver.getCurrentUrl(), "https://automationexercise.com/",
+                "Wrong URL!");
+        navPage.getProductsLink().click();
+        productsPage.waitForProductsPage();
+        Assert.assertTrue(driver.getCurrentUrl().contains("/products"),
+                "Wrong URL! Not on All Products page!");
+        String searchProduct = "white";
+        productsPage.getSearchInput().sendKeys(searchProduct);
+        productsPage.getSearchButton().click();
+        productsPage.waitForSearchedProductsPage();
+        productsPage.productsRelateToSearch();
+        for (int i = 0; i < productsPage.productsRelateToSearch().size(); i++) {
+            Assert.assertTrue(productsPage.productsRelateToSearch().get(i).contains(searchProduct),
+                    "Product does not contain " + searchProduct);
+        }
+    }
+    @Test(priority = 100)
+    @Description("Test Case 10: Verify Subscription in home page")
+    public void verifySubscriptionInHomePage() {
+        Assert.assertEquals(driver.getCurrentUrl(), "https://automationexercise.com/",
+                "Wrong URL!");
+        new Actions(driver).scrollToElement(homePage.getFooter()).perform();
+        Assert.assertTrue(homePage.getSubscriptionText().contains("SUBSCRIPTION"),
+                "'SUBSCRIPTION' text not visible!");
+        homePage.getSubscrptionEmailInput().sendKeys(email);
+        homePage.getSubscribeButton().click();
+        Assert.assertTrue(homePage.getSuccessSubscriptionAlertText().contains("You have been successfully subscribed!"),
+                "'You have been successfully subscribed!' is not visible!");
     }
 }
