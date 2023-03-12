@@ -1,6 +1,7 @@
 package tests;
 
 import com.sun.org.glassfish.gmbal.Description;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -210,5 +211,62 @@ public class AutomationExerciseTests extends BasicTest {
         homePage.getSubscribeButton().click();
         Assert.assertTrue(homePage.getSuccessSubscriptionAlertText().contains("You have been successfully subscribed!"),
                 "'You have been successfully subscribed!' is not visible!");
+    }
+    @Test(priority = 110)
+    @Description("Test Case 11: Verify Subscription in Cart page")
+    public void verifySubscriptionInCartPage() {
+        Assert.assertEquals(driver.getCurrentUrl(), "https://automationexercise.com/",
+                "Wrong URL!");
+        navPage.getCartLink().click();
+        new Actions(driver).scrollToElement(homePage.getFooter()).perform();
+        Assert.assertTrue(homePage.getSubscriptionText().contains("SUBSCRIPTION"),
+                "'SUBSCRIPTION' text not visible!");
+        homePage.getSubscrptionEmailInput().sendKeys(email);
+        homePage.getSubscribeButton().click();
+        Assert.assertTrue(homePage.getSuccessSubscriptionAlertText().contains("You have been successfully subscribed!"),
+                "'You have been successfully subscribed!' is not visible!");
+    }
+    @Test(priority = 120)
+    @Description("Test Case 12: Add Products in Cart")
+    public void addProductsInCart() {
+        Assert.assertEquals(driver.getCurrentUrl(), "https://automationexercise.com/",
+                "Wrong URL!");
+        navPage.getProductsLink().click();
+        productsPage.getAddToCartButtonByNumber(1).click();
+        productsPage.getContinueShoppingButton().click();
+        productsPage.getAddToCartButtonByNumber(2).click();
+        productsPage.getViewCartButton().click();
+        productsPage.productsInCart();
+        Assert.assertEquals(productsPage.productsInCart().size(), 2,
+                "Number of items in the cart is not 2!");
+        Assert.assertEquals(productsPage.getProductQuantityInCart(1), "1",
+                "Wrong quantity");
+        Assert.assertEquals(productsPage.getProductQuantityInCart(2), "1",
+                "Wrong quantity!");
+        Assert.assertEquals(productsPage.getProductPriceInCart(1), "Rs. 500",
+                "Wrong price!");
+        Assert.assertEquals(productsPage.getProductPriceInCart(2), "Rs. 400",
+                "Wrong price!");
+        Assert.assertEquals(productsPage.getProductTotalPriceInCart(1), "Rs. 500",
+                "Wrong price!");
+        Assert.assertEquals(productsPage.getProductTotalPriceInCart(2), "Rs. 400",
+                "Wrong price!");
+    }
+    @Test(priority = 130)
+    @Description("Test Case 13: Verify Product quantity in Cart")
+    public void verifyProductQuanityInCart() throws InterruptedException {
+        Assert.assertEquals(driver.getCurrentUrl(), "https://automationexercise.com/",
+                "Wrong URL!");
+        navPage.getProductsLink().click();
+        productsPage.getViewProductButtonByNumber(3).click();
+        Assert.assertTrue(driver.getCurrentUrl().contains("/product_details"),
+                "Wrong URL! Not on Product Details page!");
+        productDetailsPage.getQuantityInput().clear();
+        productDetailsPage.getQuantityInput().sendKeys("4");
+        productDetailsPage.getAddToCartButton().click();
+        productsPage.getViewCartButton().click();
+        productsPage.productsInCart();
+        Assert.assertEquals(productsPage.getProductQuantityInCart(3), "4",
+                "Wrong quantity!");
     }
 }

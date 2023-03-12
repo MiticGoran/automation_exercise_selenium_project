@@ -35,6 +35,7 @@ public abstract class BasicTest {
     protected ContactPage contactPage;
     protected ProductsPage productsPage;
     protected HomePage homePage;
+    protected ProductDetailsPage productDetailsPage;
     protected ChromeOptions options;
     protected Random random;
     protected int randomInt;
@@ -65,6 +66,7 @@ public abstract class BasicTest {
         contactPage = new ContactPage(driver, wait);
         productsPage = new ProductsPage(driver, wait);
         homePage = new HomePage(driver, wait);
+        productDetailsPage = new ProductDetailsPage(driver, wait);
     }
 
     @BeforeMethod

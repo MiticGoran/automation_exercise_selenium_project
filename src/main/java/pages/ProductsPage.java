@@ -44,6 +44,27 @@ public class ProductsPage extends BasePage {
         return driver.findElement
                 (By.xpath("//a[@href='/product_details/"+productNumber+"']"));
     }
+    public ArrayList<String> productsInCart() {
+        List<WebElement> listOfProducts = driver.findElements(
+                By.xpath("//div[@id='cart_info']//tbody/tr//h4/a"));
+        ArrayList<String> nameOfProducts = new ArrayList<>();
+        for (int i = 0; i < listOfProducts.size(); i++) {
+            nameOfProducts.add(listOfProducts.get(i).getText().toLowerCase());
+        }
+        return nameOfProducts;
+    }
+    public String getProductPriceInCart(int productNumber) {
+        return driver.findElement
+                (By.xpath("//tr[@id='product-"+productNumber+"']//td[@class='cart_price']/p")).getText();
+    }
+    public String getProductTotalPriceInCart(int productNumber) {
+        return driver.findElement
+                (By.xpath("//tr[@id='product-"+productNumber+"']//td[@class='cart_total']/p")).getText();
+    }
+    public String getProductQuantityInCart(int productNumber) {
+        return driver.findElement
+                (By.xpath("//tr[@id='product-"+productNumber+"']//td[@class='cart_quantity']/button")).getText();
+    }
     public String getProductName() {
         return driver.findElement
                 (By.xpath("//div[contains(@class, 'productinfo text-center')]/p")).getText();
@@ -64,4 +85,11 @@ public class ProductsPage extends BasePage {
         }
         return nameOfProducts;
     }
+    public WebElement getContinueShoppingButton() {
+        return driver.findElement(By.xpath("//button[contains(@class, 'close-modal')]"));
+    }
+    public WebElement getViewCartButton() {
+        return driver.findElement(By.xpath("//div[@class='modal-body']//a[@href='/view_cart']"));
+    }
+
 }
