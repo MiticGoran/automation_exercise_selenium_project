@@ -36,10 +36,13 @@ public abstract class BasicTest {
     protected ProductsPage productsPage;
     protected HomePage homePage;
     protected ProductDetailsPage productDetailsPage;
+    protected CartPage cartPage;
+    protected CheckoutPage checkoutPage;
     protected ChromeOptions options;
     protected Random random;
     protected int randomInt;
     protected String email;
+    protected String emailRegistration;
 
     @BeforeClass
     public void setup() {
@@ -67,12 +70,15 @@ public abstract class BasicTest {
         productsPage = new ProductsPage(driver, wait);
         homePage = new HomePage(driver, wait);
         productDetailsPage = new ProductDetailsPage(driver, wait);
+        cartPage = new CartPage(driver, wait);
+        checkoutPage = new CheckoutPage(driver, wait);
     }
 
     @BeforeMethod
     public void beforeMethod() {
         driver.get(baseUrl);
         navPage.waitForBasePage(); //waiting because of ad blocker
+        emailRegistration = "goran1" + randomInt + "@mita.com";
     }
 
     @AfterMethod

@@ -269,4 +269,217 @@ public class AutomationExerciseTests extends BasicTest {
         Assert.assertEquals(productsPage.getProductQuantityInCart(3), "4",
                 "Wrong quantity!");
     }
+    @Test(priority = 140)
+    @Description("Test Case 14: Place Order: Register while Checkout")
+    public void registerWhileCheckout() throws InterruptedException {
+        Assert.assertEquals(driver.getCurrentUrl(), "https://automationexercise.com/",
+                "Wrong URL!");
+        productsPage.getAddToCartButtonByNumber(1).click();
+        productsPage.getContinueShoppingButton().click();
+        productsPage.getAddToCartButtonByNumber(5).click();
+        productsPage.getContinueShoppingButton().click();
+        navPage.getCartLink().click();
+        Assert.assertEquals(driver.getCurrentUrl(), "https://automationexercise.com/view_cart",
+                "Wrong URL!");
+        cartPage.getProceedToCheckoutButton().click();
+        cartPage.getRegisterLoginLink().click();
+        loginPage.getSignupNameInput().sendKeys("Goran");
+        loginPage.getSignupEmailInput().sendKeys(emailRegistration);
+        loginPage.getSignupButton().click();
+        signupPage.waitForAccountInformationPage();
+        Assert.assertTrue(signupPage.accountInformationText().contains("ENTER ACCOUNT INFORMATION"),
+                "'ENTER ACCOUNT INFORMATION' is not visible!");
+        signupPage.getMrTitleRadioInput().click();
+        signupPage.getPasswordInput().sendKeys("pass12345");
+        signupPage.getDaySelect().click();
+        signupPage.selectDay(4).click();
+        signupPage.getMonthSelect().click();
+        signupPage.selectMonth(3).click();
+        signupPage.getYearSelect().click();
+        signupPage.selectYear(1991).click();
+        signupPage.getNewsletterCheckbox().click();
+        signupPage.getSpecialOffersCheckbox().click();
+        new Actions(driver).scrollToElement(signupPage.getZipcodeInput()).perform();
+        signupPage.getFirstNameInput().sendKeys("Goran");
+        signupPage.getLastNameInput().sendKeys("Mitic");
+        signupPage.getCompanyInput().sendKeys("IT Bootcamp");
+        signupPage.getAddressInput().sendKeys("New Street, 96");
+        signupPage.getAddressSecondInput().sendKeys("Another Street, 33");
+        signupPage.getCountrySelect().click();
+        signupPage.selectCountry("Canada").click();
+        signupPage.getStateInput().sendKeys("New State");
+        signupPage.getCityInput().sendKeys("New City");
+        signupPage.getZipcodeInput().sendKeys("12300");
+        new Actions(driver).scrollToElement(signupPage.getCreateAccountButton()).perform();
+        signupPage.getMobileNumberInput().sendKeys("069555333");
+        new Actions(driver).scrollToElement(signupPage.getFooter()).perform();
+        signupPage.getCreateAccountButton().click();
+        signupPage.waitForAccountCreatedPage();
+        Assert.assertTrue(signupPage.getAccountCreatedText().contains("ACCOUNT CREATED!"),
+                "'ACCOUNT CREATED!' is not visible!");
+        signupPage.getContinueButton().click();
+        Assert.assertTrue(navPage.getLoggedInText().contains("Logged in as Goran"),
+                "'Logged in as username' is not visible!");
+        navPage.getCartLink().click();
+        cartPage.getProceedToCheckoutButton().click();
+        Assert.assertEquals(checkoutPage.getDeliveryStreet1().getText(),
+                            checkoutPage.getBillingStreet1().getText(),
+                            "Delivery and Billing Street 1 are different!");
+        Assert.assertEquals(checkoutPage.getDeliveryStreet2().getText(),
+                            checkoutPage.getBillingStreet2().getText(),
+                            "Delivery and Billing Street 2 are different!");
+        Assert.assertEquals(checkoutPage.getDeliveryCityAndStateInfo().getText(),
+                            checkoutPage.getBillingCityAndStateInfo().getText(),
+                            "Delivery and Billing City and State info are different!");
+        Assert.assertEquals(checkoutPage.getDeliveryCountry().getText(),
+                            checkoutPage.getBillingCountry().getText(),
+                            "Delivery and Billing Countries are different!");
+        Assert.assertEquals(checkoutPage.getDeliveryPhoneNumber().getText(),
+                            checkoutPage.getBillingPhoneNumber().getText(),
+                            "Delivery and Billing phone numbers are different!");
+        checkoutPage.getCommentTextArea().sendKeys("Test Order comment.");
+        checkoutPage.getPlaceOrderButton().click();
+        checkoutPage.getNameOnCardInput().sendKeys("Goran");
+        checkoutPage.getCardNumberInput().sendKeys("1111222233334444");
+        checkoutPage.getCVCInput().sendKeys("123");
+        checkoutPage.getExpirationMonthInput().sendKeys("10");
+        checkoutPage.getExpirationYearInput().sendKeys("2025");
+        checkoutPage.getPayAndConfirmButton().click();
+        Assert.assertTrue(checkoutPage.getOrderConfirmedText().contains("Congratulations! Your order has been confirmed!"),
+                "'Congratulations! Your order has been confirmed!' is not visible!");
+        navPage.getDeleteAccountLink().click();
+        Assert.assertTrue(signupPage.getAccountDeletedText().contains("ACCOUNT DELETED!"),
+                "'ACCOUNT DELETED!' is not visible!");
+    }
+    @Test(priority = 150)
+    @Description("Test Case 15: Place Order: Register before Checkout")
+    public void registerBeforeCheckout() throws InterruptedException {
+        Assert.assertEquals(driver.getCurrentUrl(), "https://automationexercise.com/",
+                "Wrong URL!");
+        navPage.getLoginSignupLink().click();
+        loginPage.waitForSignupLoginPage();
+        Assert.assertTrue(loginPage.getSignupText().contains("New User Signup!"),
+                "'New User Signup!' is not visible!");
+        loginPage.getSignupNameInput().sendKeys("Goran");
+        loginPage.getSignupEmailInput().sendKeys(emailRegistration);
+        loginPage.getSignupButton().click();
+        signupPage.waitForAccountInformationPage();
+        Assert.assertTrue(signupPage.accountInformationText().contains("ENTER ACCOUNT INFORMATION"),
+                "'ENTER ACCOUNT INFORMATION' is not visible!");
+        signupPage.getMrTitleRadioInput().click();
+        signupPage.getPasswordInput().sendKeys("pass12345");
+        signupPage.getDaySelect().click();
+        signupPage.selectDay(4).click();
+        signupPage.getMonthSelect().click();
+        signupPage.selectMonth(3).click();
+        signupPage.getYearSelect().click();
+        signupPage.selectYear(1991).click();
+        signupPage.getNewsletterCheckbox().click();
+        signupPage.getSpecialOffersCheckbox().click();
+        new Actions(driver).scrollToElement(signupPage.getZipcodeInput()).perform();
+        signupPage.getFirstNameInput().sendKeys("Goran");
+        signupPage.getLastNameInput().sendKeys("Mitic");
+        signupPage.getCompanyInput().sendKeys("IT Bootcamp");
+        signupPage.getAddressInput().sendKeys("New Street, 96");
+        signupPage.getAddressSecondInput().sendKeys("Another Street, 33");
+        signupPage.getCountrySelect().click();
+        signupPage.selectCountry("Canada").click();
+        signupPage.getStateInput().sendKeys("New State");
+        signupPage.getCityInput().sendKeys("New City");
+        signupPage.getZipcodeInput().sendKeys("12300");
+        new Actions(driver).scrollToElement(signupPage.getCreateAccountButton()).perform();
+        signupPage.getMobileNumberInput().sendKeys("069555333");
+        new Actions(driver).scrollToElement(signupPage.getFooter()).perform();
+        signupPage.getCreateAccountButton().click();
+        signupPage.waitForAccountCreatedPage();
+        Assert.assertTrue(signupPage.getAccountCreatedText().contains("ACCOUNT CREATED!"),
+                "'ACCOUNT CREATED!' is not visible!");
+        signupPage.getContinueButton().click();
+        Assert.assertTrue(navPage.getLoggedInText().contains("Logged in as Goran"),
+                "'Logged in as username' is not visible!");
+        productsPage.getAddToCartButtonByNumber(1).click();
+        productsPage.getContinueShoppingButton().click();
+        productsPage.getAddToCartButtonByNumber(5).click();
+        productsPage.getContinueShoppingButton().click();
+        navPage.getCartLink().click();
+        Assert.assertEquals(driver.getCurrentUrl(), "https://automationexercise.com/view_cart",
+                "Wrong URL!");
+        cartPage.getProceedToCheckoutButton().click();
+        Assert.assertEquals(checkoutPage.getDeliveryStreet1().getText(),
+                checkoutPage.getBillingStreet1().getText(),
+                "Delivery and Billing Street 1 are different!");
+        Assert.assertEquals(checkoutPage.getDeliveryStreet2().getText(),
+                checkoutPage.getBillingStreet2().getText(),
+                "Delivery and Billing Street 2 are different!");
+        Assert.assertEquals(checkoutPage.getDeliveryCityAndStateInfo().getText(),
+                checkoutPage.getBillingCityAndStateInfo().getText(),
+                "Delivery and Billing City and State info are different!");
+        Assert.assertEquals(checkoutPage.getDeliveryCountry().getText(),
+                checkoutPage.getBillingCountry().getText(),
+                "Delivery and Billing Countries are different!");
+        Assert.assertEquals(checkoutPage.getDeliveryPhoneNumber().getText(),
+                checkoutPage.getBillingPhoneNumber().getText(),
+                "Delivery and Billing phone numbers are different!");
+        checkoutPage.getCommentTextArea().sendKeys("Test Order comment.");
+        checkoutPage.getPlaceOrderButton().click();
+        checkoutPage.getNameOnCardInput().sendKeys("Goran");
+        checkoutPage.getCardNumberInput().sendKeys("1111222233334444");
+        checkoutPage.getCVCInput().sendKeys("123");
+        checkoutPage.getExpirationMonthInput().sendKeys("10");
+        checkoutPage.getExpirationYearInput().sendKeys("2025");
+        checkoutPage.getPayAndConfirmButton().click();
+        Assert.assertTrue(checkoutPage.getOrderConfirmedText().contains("Congratulations! Your order has been confirmed!"),
+                "'Congratulations! Your order has been confirmed!' is not visible!");
+        navPage.getLogoutLink().click();
+    }
+
+    @Test(priority = 160)
+    @Description("Test Case 16: Place Order: Login before Checkout")
+    public void loginBeforeCheckout() {
+        Assert.assertEquals(driver.getCurrentUrl(), "https://automationexercise.com/",
+                "Wrong URL!");
+        navPage.getLoginSignupLink().click();
+        loginPage.waitForSignupLoginPage();
+        Assert.assertTrue(loginPage.getLoginText().contains("Login to your account"),
+                "'Login to your account' is not visible!");
+        loginPage.getLoginEmailInput().sendKeys(emailRegistration);
+        loginPage.getLoginPasswordInput().sendKeys("pass12345");
+        loginPage.getLoginButton().click();
+        Assert.assertTrue(navPage.getLoggedInText().contains("Logged in as Goran"),
+                "'Logged in as username' is not visible!");
+        productsPage.getAddToCartButtonByNumber(1).click();
+        productsPage.getContinueShoppingButton().click();
+        productsPage.getAddToCartButtonByNumber(3).click();
+        productsPage.getContinueShoppingButton().click();
+        navPage.getCartLink().click();
+        Assert.assertEquals(driver.getCurrentUrl(), "https://automationexercise.com/view_cart",
+                "Wrong URL!");
+        cartPage.getProceedToCheckoutButton().click();
+        Assert.assertEquals(checkoutPage.getDeliveryStreet1().getText(),
+                checkoutPage.getBillingStreet1().getText(),
+                "Delivery and Billing Street 1 are different!");
+        Assert.assertEquals(checkoutPage.getDeliveryStreet2().getText(),
+                checkoutPage.getBillingStreet2().getText(),
+                "Delivery and Billing Street 2 are different!");
+        Assert.assertEquals(checkoutPage.getDeliveryCityAndStateInfo().getText(),
+                checkoutPage.getBillingCityAndStateInfo().getText(),
+                "Delivery and Billing City and State info are different!");
+        Assert.assertEquals(checkoutPage.getDeliveryCountry().getText(),
+                checkoutPage.getBillingCountry().getText(),
+                "Delivery and Billing Countries are different!");
+        Assert.assertEquals(checkoutPage.getDeliveryPhoneNumber().getText(),
+                checkoutPage.getBillingPhoneNumber().getText(),
+                "Delivery and Billing phone numbers are different!");
+        checkoutPage.getCommentTextArea().sendKeys("Test Order comment.");
+        checkoutPage.getPlaceOrderButton().click();
+        checkoutPage.getNameOnCardInput().sendKeys("Goran");
+        checkoutPage.getCardNumberInput().sendKeys("1111222233334444");
+        checkoutPage.getCVCInput().sendKeys("123");
+        checkoutPage.getExpirationMonthInput().sendKeys("10");
+        checkoutPage.getExpirationYearInput().sendKeys("2025");
+        checkoutPage.getPayAndConfirmButton().click();
+        Assert.assertTrue(checkoutPage.getOrderConfirmedText().contains("Congratulations! Your order has been confirmed!"),
+                "'Congratulations! Your order has been confirmed!' is not visible!");
+    }
+
 }
