@@ -38,6 +38,8 @@ public abstract class BasicTest {
     protected ProductDetailsPage productDetailsPage;
     protected CartPage cartPage;
     protected CheckoutPage checkoutPage;
+    protected CategoryPage categoryPage;
+    protected BrandsPage brandsPage;
     protected ChromeOptions options;
     protected Random random;
     protected int randomInt;
@@ -72,6 +74,8 @@ public abstract class BasicTest {
         productDetailsPage = new ProductDetailsPage(driver, wait);
         cartPage = new CartPage(driver, wait);
         checkoutPage = new CheckoutPage(driver, wait);
+        categoryPage = new CategoryPage(driver, wait);
+        brandsPage = new BrandsPage(driver, wait);
     }
 
     @BeforeMethod

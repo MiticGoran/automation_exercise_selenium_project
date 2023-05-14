@@ -481,5 +481,50 @@ public class AutomationExerciseTests extends BasicTest {
         Assert.assertTrue(checkoutPage.getOrderConfirmedText().contains("Congratulations! Your order has been confirmed!"),
                 "'Congratulations! Your order has been confirmed!' is not visible!");
     }
+    @Test(priority = 170)
+    @Description("Test Case 17: Remove Products From Cart")
+    public void removeProductsFromCart() {
+        Assert.assertEquals(driver.getCurrentUrl(), "https://automationexercise.com/",
+                "Wrong URL!");
+        productsPage.getAddToCartButtonByNumber(1).click();
+        productsPage.getViewCartButton().click();
+        Assert.assertEquals(driver.getCurrentUrl(), "https://automationexercise.com/view_cart",
+        "Wrong URL!");
+        cartPage.getRemoveProductFromCartButtonById(1).click();
+        Assert.assertTrue(cartPage.isProductDisplayedById(1),
+                "Product is not removed from the cart!");
+    }
+    @Test(priority = 180)
+    @Description("Test Case 18: View Category Products")
+    public void viewsCategoryProducts() {
+        Assert.assertEquals(driver.getCurrentUrl(), "https://automationexercise.com/",
+                "Wrong URL!");
+        Assert.assertTrue(categoryPage.verifyCategoryTab().isDisplayed(),
+                "Category tab is not visible!");
+        categoryPage.getWomenCategoryLink().click();
+        categoryPage.getDressCategoryLink().click();
+        Assert.assertTrue(categoryPage.verifyDressCategoryPage().isDisplayed(),
+                "'Women - Dress Products' is not displayed!");
+        categoryPage.getMenCategoryLink().click();
+        categoryPage.getTShirtsCategoryLink().click();
+        Assert.assertTrue(categoryPage.verifyTShirtCategoryPage().isDisplayed(),
+                "'Men - Tshirts Products' is not displayed!");
+    }
+    @Test(priority = 190)
+    @Description("Test Case 19: View & Cart Brand Products")
+    public void viewsBrandProducts() {
+        Assert.assertEquals(driver.getCurrentUrl(), "https://automationexercise.com/",
+                "Wrong URL!");
+        navPage.getProductsLink().click();
+        Assert.assertTrue(brandsPage.verifyBrandsTab().isDisplayed(),
+                "Brand tab is not visible!");
+        brandsPage.getPoloBrandLink().click();
+        Assert.assertTrue(brandsPage.verifyPoloBrandPage().isDisplayed(),
+                "'Brand - Polo Products' is not displayed!");
+        brandsPage.getMadameBrandLink().click();
+        Assert.assertTrue(brandsPage.verifyMadameBrandPage().isDisplayed(),
+                "'Brand - Madame Products' is not displayed!");
+    }
+
 
 }
