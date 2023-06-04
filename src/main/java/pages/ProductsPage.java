@@ -40,6 +40,9 @@ public class ProductsPage extends BasePage {
         return driver.findElement
                 (By.xpath("//a[@data-product-id='"+productNumber+"']"));
     }
+    public WebElement getSearchedProductAddToCartByNumber(int num){
+        return driver.findElement(By.xpath("//div["+num+"]//a[contains(@class, 'add-to-cart')]"));
+    }
     public WebElement getViewProductButtonByNumber(int productNumber) {
         return driver.findElement
                 (By.xpath("//a[@href='/product_details/"+productNumber+"']"));
@@ -90,6 +93,9 @@ public class ProductsPage extends BasePage {
     }
     public WebElement getViewCartButton() {
         return driver.findElement(By.xpath("//div[@class='modal-body']//a[@href='/view_cart']"));
+    }
+    public WebElement writeYourReviewIsVisible() {
+        return driver.findElement(By.xpath("//a[@href='#reviews']"));
     }
 
 }

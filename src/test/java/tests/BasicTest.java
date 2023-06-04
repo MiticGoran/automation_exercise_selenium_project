@@ -58,8 +58,7 @@ public abstract class BasicTest {
         // website is full of ads, adding ad blocker
         options.addArguments
                 ("load-extension=C:\\Users\\Mita\\AppData\\Local\\Google\\Chrome\\" +
-                        "User Data\\Default\\Extensions\\" +
-                        "ggdpplfehdighdpleoegjefnpefgpgfh\\1.0.10_0");
+                        "User Data\\Default\\Extensions\\ggdpplfehdighdpleoegjefnpefgpgfh\\1.0.11_0");
         driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));

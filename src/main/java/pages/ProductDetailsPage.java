@@ -29,4 +29,10 @@ public class ProductDetailsPage extends BasePage {
     public WebElement getReviewSubmitButton() {
         return driver.findElement(By.id("button-review"));
     }
+    public WebElement getTextAreaReviewInput() {
+        return driver.findElement(By.id("review"));
+    }
+    public WebElement verifyReviewSuccessDisplayed() {
+        return driver.findElement(By.xpath("//div[contains(@class, 'alert-success')]"));
+    }
 }

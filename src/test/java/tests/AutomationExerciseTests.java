@@ -525,6 +525,67 @@ public class AutomationExerciseTests extends BasicTest {
         Assert.assertTrue(brandsPage.verifyMadameBrandPage().isDisplayed(),
                 "'Brand - Madame Products' is not displayed!");
     }
+    @Test(priority = 200)
+    @Description("Test Case 20: Search Products and Verify Cart After Login")
+    public void searchProductAndVerifyCartAfterLogin() throws InterruptedException {
+        Assert.assertEquals(driver.getCurrentUrl(), "https://automationexercise.com/",
+                "Wrong URL!");
+        navPage.getLogoutLink().click();
+        navPage.getProductsLink().click();
+        productsPage.waitForProductsPage();
+        Assert.assertTrue(driver.getCurrentUrl().contains("/products"),
+                "Wrong URL! Not on All Products page!");
+        String searchProduct = "white";
+        productsPage.getSearchInput().sendKeys(searchProduct);
+        productsPage.getSearchButton().click();
+        productsPage.waitForSearchedProductsPage();
+        productsPage.productsRelateToSearch();
+        for (int i = 0; i < productsPage.productsRelateToSearch().size(); i++) {
+            Assert.assertTrue(productsPage.productsRelateToSearch().get(i).contains(searchProduct),
+                    "Product does not contain " + searchProduct);
+        }
+        for (int i = 0; i < productsPage.productsRelateToSearch().size(); i++) {
+            productsPage.getSearchedProductAddToCartByNumber(i+2).click();
+            productsPage.getContinueShoppingButton().click();
+        }
+        navPage.getCartLink().click();
 
-
+        for (int i = 0; i < cartPage.productsInCart().size(); i++) {
+            Assert.assertTrue(cartPage.productsInCart().get(i).contains(searchProduct),
+                    "Cart does not contains " + searchProduct);
+        }
+        navPage.getLoginSignupLink().click();
+        loginPage.waitForSignupLoginPage();
+        Assert.assertTrue(loginPage.getLoginText().contains("Login to your account"),
+                "'Login to your account' is not visible!");
+        loginPage.getLoginEmailInput().sendKeys(email);
+        loginPage.getLoginPasswordInput().sendKeys("pass12345");
+        loginPage.getLoginButton().click();
+        Assert.assertTrue(navPage.getLoggedInText().contains("Logged in as Goran"),
+                "'Logged in as username' is not visible!");
+        navPage.getCartLink().click();
+        for (int i = 0; i < cartPage.productsInCart().size(); i++) {
+            Assert.assertTrue(cartPage.productsInCart().get(i).contains(searchProduct),
+                    "Cart does not contains " + searchProduct);
+        }
+    }
+    @Test(priority = 210)
+    @Description("Test Case 21: Add review on product")
+    public void addReviewOnProduct() throws InterruptedException {
+        Assert.assertEquals(driver.getCurrentUrl(), "https://automationexercise.com/",
+                "Wrong URL!");
+        navPage.getProductsLink().click();
+        productsPage.waitForProductsPage();
+        Assert.assertTrue(driver.getCurrentUrl().contains("/products"),
+                "Wrong URL! Not on All Products page!");
+        productsPage.getViewProductButtonByNumber(1).click();
+        Assert.assertTrue(productsPage.writeYourReviewIsVisible().isDisplayed(),
+                "Write Your Reviews is not visible!");
+        productDetailsPage.getReviewNameInput().sendKeys("Goran");
+        productDetailsPage.getReviewEmailInput().sendKeys(email);
+        productDetailsPage.getTextAreaReviewInput().sendKeys("Text Test Review.");
+        productDetailsPage.getReviewSubmitButton().click();
+        Assert.assertTrue(productDetailsPage.verifyReviewSuccessDisplayed().isDisplayed(),
+                "'Thank you for your review.' is not displayed!");
+    }
 }
