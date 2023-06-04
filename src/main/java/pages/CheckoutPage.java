@@ -79,4 +79,10 @@ public class CheckoutPage extends BasePage {
         return driver.findElement
                 (By.xpath("//div[@class='col-sm-9 col-sm-offset-1']/p")).getText();
     }
+    public WebElement getDownloadInvoiceButton() {
+        return driver.findElement(By.xpath("/a[contains(@class, 'btn btn-default check_out')]"));
+    }
+    public WebElement getContinueButton() {
+        return driver.findElement(By.xpath("//a[@data-qa='continue-button']"));
+    }
 }

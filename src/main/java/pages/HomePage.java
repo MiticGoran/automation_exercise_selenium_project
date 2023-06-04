@@ -24,4 +24,14 @@ public class HomePage extends BasePage {
     public String getSuccessSubscriptionAlertText() {
         return driver.findElement(By.xpath("//div[@id='success-subscribe']/div")).getText();
     }
+    public WebElement getRecommendedItemsBox() {
+        return driver.findElement(By.className("recommended_items"));
+    }
+    public WebElement getSubscriptionBox() {
+        return driver.findElement(By.xpath("//div[contains(@class, 'single-widget')]//h2"));
+    }
+    public WebElement getScrollUpButton() {
+        return driver.findElement(By.id("scrollUp"));
+    }
+
 }

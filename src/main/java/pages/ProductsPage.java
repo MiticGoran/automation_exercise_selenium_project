@@ -97,5 +97,9 @@ public class ProductsPage extends BasePage {
     public WebElement writeYourReviewIsVisible() {
         return driver.findElement(By.xpath("//a[@href='#reviews']"));
     }
-
+    public WebElement getAddToCartButtonByNumberRecommendedItem(int productNumber) {
+        return driver.findElement
+                (By.xpath("//div[contains(@class, 'item active')]" +
+                        "//a[contains(@class, 'btn btn-default add-to-cart')]["+productNumber+"]"));
+    }
 }

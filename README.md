@@ -1,4 +1,4 @@
-# automation_exercise_selenium_project
+# AutomationExercise Website Selenium Project
 
 This is a test automation project that uses Selenium WebDriver, TestNG, and Java to
 automate tests for a website (https://automationexercise.com/).
@@ -6,7 +6,7 @@ The tests cover various features and scenarios of a web application,
 including user profile management, signup, login, shopping, reviewing products, searching products and more.
 Due to the high number of ads on the website, I used AdBlocker.
 ***
-# The following test cases were executed:
+The following test cases were executed:
 
 * Test Case 1: Register User
 * Test Case 2: Login User with correct email and password
@@ -29,3 +29,8 @@ Due to the high number of ads on the website, I used AdBlocker.
 * Test Case 19: View & Cart Brand Products
 * Test Case 20: Search Products and Verify Cart After Login
 * Test Case 21: Add review on product
+* Test Case 22: Add to cart from Recommended items
+* Test Case 23: Verify address details in checkout page
+* Test Case 24: Download Invoice after purchase order
+* Test Case 25: Verify Scroll Up using 'Arrow' button and Scroll Down functionality
+* Test Case 26: Verify Scroll Up without 'Arrow' button and Scroll Down functionality
